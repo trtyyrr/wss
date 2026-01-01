@@ -1,19 +1,14 @@
 {
   "SM8650_GKI_6.1": {
-    "SELinux_Status_Unlock": {
-      "comment": "定位 selinux_enforcing 变量并强制返回 0 (Permissive)",
+    "SELinux_Disable": {
+      "comment": "强制将 SELinux 设置为宽容模式",
       "search": "7F 23 00 D5 1F 20 03 D5",
       "replace": "1F 20 03 D5 1F 20 03 D5"
     },
-    "Cap_Check_Bypass": {
-      "comment": "劫持 capability 检查函数，使其始终返回具有所有权限的状态",
+    "Root_Privilege": {
+      "comment": "修改内核凭证逻辑，允许隐身提权",
       "search": "E0 03 1F AA EA 03 00 AA",
       "replace": "E0 03 1F AA E0 03 1F AA"
-    },
-    "Prctl_Backdoor": {
-      "comment": "在 sys_prctl 中埋入 0x1337BEEF 暗号逻辑",
-      "search": "F3 03 02 AA F4 03 01 AA F5 03 00 AA",
-      "replace": "F3 03 02 AA F4 03 01 AA 1F 20 03 D5"
     }
   }
 }
