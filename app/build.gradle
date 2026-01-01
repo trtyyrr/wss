@@ -1,0 +1,41 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.android.system.hardware.ext' // 伪装成系统扩展组件
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.android.system.hardware.ext"
+        minSdk 31
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        // 关键：针对 SM8650 仅保留 64 位支持，提升隐藏性并减小体积
+        ndk {
+            abiFilters 'arm64-v8a'
+        }
+        
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++17"
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    // 引入 libsu 用于处理底层的 I/O 交互
+    implementation 'com.github.topjohnwu.libsu:core:5.2.2'
+}
